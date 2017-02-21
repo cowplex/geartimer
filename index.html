@@ -33,8 +33,10 @@
         </div>
         <div class="mw9 center ph4 pt3">
             <p class="white f3">Gears:</p>
-            <div v-for="(gear, i) in gears" class="f5 white lh-3">
-                Gear {{i+1}}: {{gear.time}} seconds at time {{gear.when}}
+            <div class="h3 overflow-y-scroll">
+                <div v-for="(gear, i) in gears" class="f5 white lh-3">
+                    Gear {{i+1}}: {{gear.time}} seconds at time {{gear.when}}
+                </div>
             </div>
         </div>
         <div class="bg-red mv2 pv3 ph4 white f3 tc" @click="stopTimer" v-if="time > 0">PUSH TO STOP</div>
