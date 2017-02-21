@@ -4,31 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <title>gear timer</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
     <link rel="stylesheet" href="css/aj.min.css">
     <script src="js/vue.js"></script>
+    <script src="js/fastclick.js"></script>
     <style>
-        .pv6{
-            padding-top: 4em;
-            padding-bottom: 4em;
-        }
+    .pv6 {
+        padding-top: 4em;
+        padding-bottom: 4em;
+    }
     </style>
 </head>
 
 <body>
     <div id="app" class="min-vh-100 bg-black sans-serif">
-        <div class="pt4 white tc">
-            <h1>{{Math.round(time * 100) / 100}} second(s)</h1>
-        </div>
-        <div class="bg-green mv5 pv6 white f2 tc" @click="gear" v-if="time != 0">PUSH FOR GEAR</div>
-        <div class="bg-yellow mv5 p5 white f2 tc" @click="startTimer" v-if="time == 0">PUSH TO START</div>
-        <div class="pt1 white tc">
-            <h1>{{gears.length}} gear(s)</h1>
-        </div>
         <div class="pt3 white tc">
-            <h1>{{gpersec}} gear(s) per second</h1>
+            <p class="f2">{{Math.round(time * 100) / 100}} second(s)</p>
         </div>
-        <div class="mw9 center ph4">
-            <h2 class="white f1">Gears:</h2>
+        <div class="bg-green mv3 pv6 white f3 tc" @click="gear" v-if="time != 0">PUSH FOR GEAR</div>
+        <div class="bg-yellow mv3 p5 white f3 tc" @click="startTimer" v-if="time == 0">PUSH TO START</div>
+        <div class="pt1 white tc f3">
+            <p>{{gears.length}} gear(s)</p>
+        </div>
+        <div class="pt3 white tc f3">
+            <p>{{gpersec}} gear(s) per second</p>
+        </div>
+        <div class="mw9 center ph4 pt3">
+            <p class="white f3">Gears:</p>
             <div v-for="(gear, i) in gears" class="f1 white">
                 Gear {{i+1}}: {{gear.time}} seconds at time {{gear.when}}
             </div>
@@ -36,6 +40,13 @@
         <div class="bg-red mv5 p5 white f2 tc" @click="stopTimer" v-if="time > 0">PUSH TO STOP</div>
     </div>
     <script src="main.js"></script>
+    <script>
+    if ('addEventListener' in document) {
+        document.addEventListener('DOMContentLoaded', function() {
+            FastClick.attach(document.body);
+        }, false);
+    }
+    </script>
 </body>
 
 </html>
