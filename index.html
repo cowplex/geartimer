@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>gear timer</title>
+    <link rel="stylesheet" href="css/aj.min.css">
+    <script src="js/vue.js"></script>
+</head>
+
+<body>
+    <div id="app" class="vh-100 bg-blue sans-serif">
+        <div class="pt4 white tc">
+            <h1>{{Math.round(time * 100) / 100}} second(s)</h1>
+        </div>
+        <div class="bg-green mv5 p5 white f2 tc" @click="gear" v-if="time != 0">PUSH FOR GEAR</div>
+        <div class="bg-yellow mv5 p5 white f2 tc" @click="startTimer" v-if="time == 0">PUSH TO START</div>
+        <div class="pt4 white tc">
+            <h1>{{gears.length}} gear(s)</h1>
+        </div>
+        <div class="pt4 white tc">
+            <h1>{{gpersec}} gear(s) per second</h1>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+
+</html>
