@@ -3,6 +3,7 @@ var app = new Vue({
     data: {
         gears: [],
         time: 0,
+        timer: null,
     },
     methods: {
         gear: function() {
@@ -12,14 +13,17 @@ var app = new Vue({
             } else {
                 t = this.time - this.gears[this.gears.length - 1].when
             }
-            this.gears.push({ time: t, when: this.time })
+            this.gears.push({ time: Math.round(t * 100) / 100, when: Math.round(this.time * 100) / 100 })
         },
         startTimer: function() {
             var self = this;
-            setInterval(function() {
+            this.timer = setInterval(function() {
                 self.time = self.time + .1
             }, 100)
         },
+        stopTimer: function() {
+            clearInterval(this.timer)
+        }
     },
     computed: {
         // a computed getter
@@ -29,7 +33,7 @@ var app = new Vue({
                 return 0
             } else {
                 return Math.round((this.gears.length / this.gears[this.gears.length - 1].when) * 100) / 100
+            }
         }
     }
-}
 })
