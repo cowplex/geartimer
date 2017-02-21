@@ -6,14 +6,20 @@
     <title>gear timer</title>
     <link rel="stylesheet" href="css/aj.min.css">
     <script src="js/vue.js"></script>
+    <style>
+        .pv6{
+            padding-top: 4em;
+            padding-bottom: 4em;
+        }
+    </style>
 </head>
 
 <body>
-    <div id="app" class="vh-100 bg-black sans-serif">
+    <div id="app" class="min-vh-100 bg-black sans-serif">
         <div class="pt4 white tc">
             <h1>{{Math.round(time * 100) / 100}} second(s)</h1>
         </div>
-        <div class="bg-green mv5 p5 white f2 tc" @click="gear" v-if="time != 0">PUSH FOR GEAR</div>
+        <div class="bg-green mv5 pv6 white f2 tc" @click="gear" v-if="time != 0">PUSH FOR GEAR</div>
         <div class="bg-yellow mv5 p5 white f2 tc" @click="startTimer" v-if="time == 0">PUSH TO START</div>
         <div class="pt1 white tc">
             <h1>{{gears.length}} gear(s)</h1>
