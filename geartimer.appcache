@@ -1,0 +1,20 @@
+CACHE MANIFEST
+
+# Offline cache 1488395346
+
+# html files
+index.html
+ 
+# css files
+css/aj.min.css
+ 
+# js files
+main.js
+js/fastclick.js
+js/vue.js
+ 
+# images
+app/appicon.png
+app/launchscreen.png
+
+#manifest="geartimer.appcache" 

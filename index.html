@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" manifest="geartimer.appcache" >
 
 <head>
     <meta charset="UTF-8">
-    <title>gear timer</title>
+    <title>Gear Timer</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
+	<link rel="apple-touch-icon" href="app/appicon.png">
+	<link rel="apple-touch-startup-image" href="app/launchscreen.png">
     <link rel="stylesheet" href="css/aj.min.css">
     <script src="js/vue.js"></script>
     <script src="js/fastclick.js"></script>
@@ -20,32 +22,64 @@
 
 <body>
     <div id="app" class="min-vh-100 bg-black sans-serif">
-        <div class="pt3 white tc">
-            <p class="f2">{{Math.round(time * 100) / 100}} second(s)</p>
-        </div>
-        <div class="bg-green mv3 pv6 white f3 tc" @click="gear" v-if="time != 0">PUSH FOR GEAR</div>
-        <div class="bg-yellow mv3 p5 white f3 tc" @click="startTimer" v-if="time == 0">PUSH TO START</div>
-        <div class="pt1 white tc f3">
-            <p>{{gears.length}} gear(s)</p>
-        </div>
-        <div class="pt3 white tc f3">
-            <p>{{gpersec}} gear(s) per second</p>
-        </div>
-        <div class="mw9 center ph4 pt3">
-            <p class="white f3">Gears:</p>
-            <div class="h3 overflow-y-scroll">
-                <div v-for="(gear, i) in gears" class="f5 white lh-3">
-                    Gear {{i+1}}: {{gear.time}} seconds at time {{gear.when}}
-                </div>
-            </div>
-        </div>
-        <div class="bg-red mv2 pv3 ph4 white f3 tc" @click="stopTimer" v-if="time > 0">PUSH TO STOP</div>
+		<div v-if="time == 0">
+			<div class="pt1 white tc f3">
+				<p>Match Time: <br><input v-model="match_time" type="number"></input></p>
+				<p>End game warning: <br><input v-model="endgame" type="number"></input></p>
+			</div>
+			<div class="bg-yellow mv3 p5 white f3 tc" @click="startTimer">PUSH TO START</div>
+			<div class="pt3 white tc f3" v-if="passcode == null">
+				<p>Passcode:<br>
+				<input v-model="passcode_box" type="password"></input>
+				</p>
+				<div  class="bg-green mv2 pv3 ph4 white f3 tc" @click="save_passcode">PUSH TO SAVE PASSCODE</div><br><br>
+			</div>
+			
+			<div  class="bg-green mv2 pv3 ph4 white f3 tc" @click="post_data" v-if="passcode != null">PUSH TO POST DATA</div><br><br>
+			<div class="bg-red mv2 pv3 ph4 white f3 tc" v-if="passcode != null"  @click="reset_data">PUSH TO RESET DATA</div>
+		</div>
+		
+        <div  v-if="time != 0">
+			<div class="pt3 white tc">
+				<pre class="f2">{{(Math.round(time * 100) / 100).toFixed(1)}}s ({{(Math.round((time - match_time) * 100) / 100).toFixed(1)}}s)</pre>
+			</div>
+			<div class="bg-green mv3 pv6 white f3 tc" @click="gear" v-if="time != 0 && timer != null">PUSH FOR GEAR</div>
+			<div class="bg-red mv2 pv3 ph4 white f3 tc" @click="reset" v-if="time > 0 && timer == null">PUSH TO RESET</div>
+			<div class="pt1 white tc f3">
+				<p>{{gears.length}} gear<span v-if="gears.length != 1">s</span><span v-if="time > 0 && timer == null"> delivered</span></p>
+			</div>
+			<div v-if="gears.length > 0">
+				<div class="pt3 white tc f3">
+					<p>{{delivery_estimate}} est. deliverable</p>
+				</div>
+				<div class="mw9 center ph4 pt3">
+					<p class="white f3">Gears:</p>
+					<div v-for="(gear, i) in gears" class="f5 white lh-3">
+						Gear {{i+1}}: {{gear.time}}s cycle @ {{gear.when}}s
+					</div>
+				</div>
+			</div>
+			<div class="bg-red mv2 pv3 ph4 white f3 tc" @click="stopTimer" v-if="time > 0 && timer != null">PUSH TO STOP</div>
+			
+			<div class="pt3 white tc f3" v-if="!saved && time > 0 && timer == null">
+				<span>Driver: 
+					<select v-model="driver">
+						<option>Eashwar</option>
+						<option>Noah</option>
+					</select>
+				</span><br>
+				Notes: <input v-model="notes"></input>
+				<div @click="save_data" class="bg-green mv2 pv3 ph4 white f3 tc">PUSH TO SAVE DATA</div>
+			</div>
+		</div>
     </div>
     <script src="main.js"></script>
     <script>
     if ('addEventListener' in document) {
         document.addEventListener('DOMContentLoaded', function() {
             FastClick.attach(document.body);
+			if(typeof(localStorage.gear_timer_passcode) != "undefined")
+				app.$data.passcode = localStorage.gear_timer_passcode;
         }, false);
     }
     </script>
