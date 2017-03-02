@@ -1,9 +1,9 @@
 CACHE MANIFEST
 
-# Offline cache 1488395346
+# Offline cache 1488469313
 
 # html files
-index.html
+#index.html
  
 # css files
 css/aj.min.css
@@ -17,4 +17,9 @@ js/vue.js
 app/appicon.png
 app/launchscreen.png
 
-#manifest="geartimer.appcache" 
+# Vue externals
+#http://www.w3.org/1999/xlink
+#http://www.w3.org/2000/svg
+#http://www.w3.org/1998/Math/MathML
+
+#manifest="geartimer.appcache"

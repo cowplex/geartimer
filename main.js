@@ -67,7 +67,7 @@ var app = new Vue({
 			
 			var xhr = new XMLHttpRequest();   // new HttpRequest instance 
 			xhr.open("POST", "http://team1504.cowplex.com/2017/gear_timer.php");
-			xhr.setRequestHeader("Content-Type", "application/json");
+		//	xhr.setRequestHeader("Content-Type", "application/json");
 			//xhr.onreadystatechange = function() {//Call a function when the state changes.
 			//	if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
 			//		// Request finished. Do processing here.
